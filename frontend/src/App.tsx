@@ -15,7 +15,7 @@ function App() {
       <main>
         <Container maxWidth="xl">
           <Routes>
-            <Route path="/" element={<h1></h1>} />
+            <Route path="/" element={<h1>Vaga</h1>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Login/>} />
           </Routes>

@@ -12,39 +12,97 @@ interface IUserMethods {
 
 type UserModel = Model<IUser, {}, IUserMethods>;
 
-const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: async function (this: HydratedDocument<IUser>, username: string): Promise<boolean> {
-        if (!this.isModified('username')) return true;
-        return !Boolean(await User.findOne({username}));
-      },
-      message: 'This user is already registered',
+enum Role {
+  User = 'user',
+  Admin = 'admin',
+}
+
+const UserSchema = new Schema<IUser, UserModel, IUserMethods>(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      validate: [
+        {
+          validator: async function (
+            this: HydratedDocument<IUser>,
+            email: string,
+          ): Promise<boolean> {
+            if (!this.isModified('email')) return true;
+            const user = await User.findOne({
+              email,
+            });
+            return !user;
+          },
+          message: 'Пользователь под таким email-ом уже зарегистрирован!',
+        },
+      ],
     },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    token: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      validate: [
+        {
+          validator: async function (
+            this: HydratedDocument<IUser>,
+            phoneNumber: string,
+          ): Promise<boolean> {
+            if (!phoneNumber) {
+              return true;
+            }
+
+            if (!this.isModified('phoneNumber')) {
+              return true;
+            }
+
+            const user = await User.findOne({
+              phoneNumber,
+            });
+
+            return !user;
+          },
+          message: 'Пользователь с таким номером телефона уже зарегистрирован!',
+        },
+        {
+          validator: function (phoneNumber: string): boolean {
+            if (!phoneNumber) {
+              return true;
+            }
+
+            const regex = /^\+996\d{9}$/;
+            return regex.test(phoneNumber);
+          },
+          message: 'Неверный формат номера телефона!',
+        },
+      ],
+    },
+    role: {
+      type: String,
+      required: true,
+      enum: Role,
+      default: Role.User,
+    },
+    avatar: String,
+    googleId: String,
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  token: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    required: true,
-    default: 'user',
-    enum: ['user', 'admin'],
-  },
-  displayName: {
-    type: String,
-    required: true,
-  },
-  avatar: String,
-});
+  { timestamps: true },
+);
 
 UserSchema.pre('save', async function(next) {
   if (!this.isModified('password')) {

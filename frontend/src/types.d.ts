@@ -1,20 +1,25 @@
 export interface RegisterMutation {
-  username: string;
+  email: string;
   password: string;
-  displayName: string;
-  avatar: string | null
+  firstName: string;
+  lastName: string;
+  avatar: File | null;
+  phoneNumber: string;
 }
 
 export interface User {
   _id: string;
-  username: string;
-  displayName: string;
-  avatar: string | null;
-  role: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
   token: string;
+  role: UserRole;
+  avatar: string | null;
+  googleId?: string;
 }
 
-export interface UserResponse {
+export interface RegisterResponse {
   message: string;
   user: User;
 }

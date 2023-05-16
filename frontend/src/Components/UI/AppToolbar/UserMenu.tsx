@@ -33,12 +33,12 @@ const UserMenu: React.FC<Props> = ({user}) => {
         onClick={handleClick}
         color="inherit"
       >
-        Hello, {user.displayName}
+        {user.firstName} {user.lastName}
       </Button>
 
       <IconButton sx={{p: 0}}>
 
-      <Avatar alt={user.displayName} src={avatar + user.avatar}/>
+      <Avatar alt={user.lastName} src={avatar + user.avatar}/>
       </IconButton>
       <Menu
         anchorEl={anchorEl}

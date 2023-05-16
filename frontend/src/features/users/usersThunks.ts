@@ -3,9 +3,8 @@ import {
   GlobalError,
   LoginMutation,
   RegisterMutation,
-  UserResponse,
   User,
-  ValidationError,
+  ValidationError, RegisterResponse,
 } from "../../types";
 import axiosApi from "../../axiosApi";
 import {isAxiosError} from "axios";
@@ -27,7 +26,7 @@ export const register = createAsyncThunk<User, RegisterMutation, {rejectValue: V
         }
       });
 
-      const response = await axiosApi.post<UserResponse>('/users', formData);
+      const response = await axiosApi.post<RegisterResponse>('/users', formData);
       return response.data.user;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
@@ -42,7 +41,7 @@ export const login = createAsyncThunk<User, LoginMutation, {rejectValue: GlobalE
   'users/login',
   async (loginMutation, {rejectWithValue}) => {
     try {
-      const response = await axiosApi.post<UserResponse>('/users/sessions', loginMutation);
+      const response = await axiosApi.post<RegisterResponse>('/users/sessions', loginMutation);
       return response.data.user;
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
@@ -60,3 +59,21 @@ export const logout = createAsyncThunk(
     dispatch(unsetUser());
   }
 );
+
+export const googleLogin = createAsyncThunk<
+  User,
+  string,
+  { rejectValue: GlobalError }
+  >('users/googleLogin', async (credential, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosApi.post<RegisterResponse>('/users/google', {
+      credential,
+    });
+    return data.user;
+  } catch (e) {
+    if (isAxiosError(e) && e.response && e.response.status === 400) {
+      return rejectWithValue(e.response.data as GlobalError);
+    }
+    throw e;
+  }
+});
