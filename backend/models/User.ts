@@ -5,7 +5,7 @@ import {IUser} from "../types";
 
 const SALT_WORK_FACTOR = 9;
 
-interface IUserMethods {
+export interface IUserMethods {
   checkPassword(password: string): Promise<boolean>;
   generateToken(): void;
 }

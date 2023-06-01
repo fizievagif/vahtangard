@@ -5,7 +5,7 @@ const rootPath = __dirname;
 const config = {
   rootPath,
   publicPath: path.join(rootPath, 'public'),
-  db: 'mongodb://localhost/vahtangard',
+  db: 'mongodb://0.0.0.0/vahtangard',
   google: {
     clientId: process.env.GOOGLE_CLIENT_ID,
   },
