@@ -1,7 +1,15 @@
 import {GlobalError, User, ValidationError} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
 import {RootState} from "../../app/store";
-import {googleLogin, login, register} from "./usersThunks";
+import {
+  changePassword,
+  googleLogin,
+  login,
+  register,
+  removeUserAvatar,
+  updateUser,
+  uploadUserAvatar
+} from "./usersThunks";
 
 interface UsersState {
   user: User | null;
@@ -10,6 +18,10 @@ interface UsersState {
   loginLoading: boolean;
   loginError: GlobalError | null
   logoutLoading: boolean;
+  updateUserLoading: false | string;
+  updateUserError: ValidationError | null;
+  passwordChanging: boolean;
+  passwordChangeError: GlobalError | null;
 }
 
 const initialState: UsersState = {
@@ -19,6 +31,10 @@ const initialState: UsersState = {
   loginLoading: false,
   loginError: null,
   logoutLoading: false,
+  updateUserLoading: false,
+  updateUserError: null,
+  passwordChanging: false,
+  passwordChangeError: null,
 };
 
 export const usersSlice = createSlice({
@@ -70,6 +86,52 @@ export const usersSlice = createSlice({
       state.registerLoading = false;
       state.loginError = error || null;
     });
+
+    builder.addCase(updateUser.pending, (state) => {
+      state.updateUserError = null;
+    });
+    builder.addCase(updateUser.fulfilled, (state, { payload: user }) => {
+      state.user = user;
+    });
+    builder.addCase(updateUser.rejected, (state, { payload: error }) => {
+      state.updateUserError = error || null;
+    });
+
+    builder.addCase(changePassword.pending, (state) => {
+      state.passwordChangeError = null;
+      state.passwordChanging = true;
+    });
+    builder.addCase(changePassword.fulfilled, (state, { payload: user }) => {
+      state.passwordChangeError = null;
+      state.passwordChanging = false;
+      state.user = user;
+    });
+    builder.addCase(changePassword.rejected, (state, { payload: error }) => {
+      state.passwordChanging = false;
+      state.passwordChangeError = error || null;
+    });
+
+    builder.addCase(removeUserAvatar.pending, (state) => {
+      state.loginLoading = true;
+    });
+    builder.addCase(removeUserAvatar.fulfilled, (state, { payload: user }) => {
+      state.loginLoading = false;
+      state.user = user;
+    });
+    builder.addCase(removeUserAvatar.rejected, (state) => {
+      state.loginLoading = false;
+    });
+
+    builder.addCase(uploadUserAvatar.pending, (state) => {
+      state.loginLoading = true;
+    });
+    builder.addCase(uploadUserAvatar.fulfilled, (state, { payload: user }) => {
+      state.loginLoading = false;
+      state.user = user;
+    });
+    builder.addCase(uploadUserAvatar.rejected, (state) => {
+      state.loginLoading = false;
+    });
   }
 });
 
@@ -81,4 +143,6 @@ export const selectRegisterLoading = (state: RootState) => state.users.registerL
 export const selectRegisterError = (state: RootState) => state.users.registerError;
 export const selectLoginLoading = (state: RootState) => state.users.loginLoading;
 export const selectLoginError = (state: RootState) => state.users.loginError;
-export const selectLogoutLoading = (state: RootState) => state.users.logoutLoading;
+export const selectUpdateUserError = (state: RootState) => state.users.updateUserError;
+export const selectPasswordChanging = (state: RootState) => state.users.passwordChanging;
+export const selectPasswordChangeError = (state: RootState) => state.users.passwordChangeError;

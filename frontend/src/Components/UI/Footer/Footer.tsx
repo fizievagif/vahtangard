@@ -73,13 +73,18 @@ export const Footer: FC = (): ReactElement => {
             <Grid item>
               <List>
                 <ListItem sx={{ m: 0, p: 0, pb: 1 }}>
+                  <Link to="/categories">
+                    <Typography>О компании</Typography>
+                  </Link>
+                </ListItem>
+                <ListItem sx={{ m: 0, p: 0, pb: 1 }}>
                   <Link to="/apartments">
                     <Typography>Аппартаменты</Typography>
                   </Link>
                 </ListItem>
                 <ListItem sx={{ m: 0, p: 0, pb: 1 }}>
-                  <Link to="/categories">
-                    <Typography>Категории</Typography>
+                  <Link to="/contacts">
+                    <Typography>Страница контактов</Typography>
                   </Link>
                 </ListItem>
               </List>

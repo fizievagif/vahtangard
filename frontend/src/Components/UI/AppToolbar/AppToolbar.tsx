@@ -27,9 +27,8 @@ interface Props {
 
 const drawerWidth = 240;
 const navItems = [
-  { name: 'Курсы', href: '/courses' },
-  { name: 'Бизнес-тренеры', href: '/teachers' },
-  { name: 'Учебные группы', href: '/groups' },
+  { name: 'Объекты', href: '/apartments' },
+  { name: 'Страница контактов', href: '/contacts' },
 ];
 
 const AppToolbar: React.FC<Props> = (props) => {
@@ -54,7 +53,7 @@ const AppToolbar: React.FC<Props> = (props) => {
       <List>
         <ListItem>
           <Button component={Link} to="/about" color="inherit">
-            О школе
+            О компании
           </Button>
         </ListItem>
         {navItems.map((item) => (
@@ -66,17 +65,12 @@ const AppToolbar: React.FC<Props> = (props) => {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem>
-          <Button component={Link} to="/tests" color="inherit">
-            Онлайн-тест
-          </Button>
-        </ListItem>
         <ListItem>{user ? null : <AnonymousMenu />}</ListItem>
         <Divider />
         <ListItem sx={{ textAlign: 'center' }}>
           {user?.role === 'admin' ? (
             <Button component={Link} to="/categories" color="inherit">
-              Категории курсов
+              Категории объектов
             </Button>
           ) : null}
         </ListItem>
@@ -157,20 +151,6 @@ const AppToolbar: React.FC<Props> = (props) => {
             sm={7}
             md={8}
           >
-            <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-              <Button component={Link} to="/courses" color="inherit">
-                Курсы
-              </Button>
-            </Box>
-            <Box
-              sx={{ display: { xs: 'none', sm: 'inline-flex' } }}
-              style={{
-                width: '2px',
-                height: '20px',
-                background: '#fff',
-                borderRadius: '10px',
-              }}
-            />
             {user ? (
               <UserMenu user={user}/>
             ) : null}

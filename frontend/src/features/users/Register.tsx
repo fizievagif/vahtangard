@@ -1,6 +1,16 @@
 import React, {useState} from 'react';
 import {Link as RouterLink, useNavigate} from 'react-router-dom';
-import {Avatar, Box, Container, Grid, Link, TextField, Typography} from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Container,
+  Grid,
+  InputAdornment,
+  Link,
+  TextField,
+  Typography,
+  IconButton
+} from "@mui/material";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {RegisterMutation} from "../../types";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
@@ -9,12 +19,15 @@ import {googleLogin, register} from "./usersThunks";
 import FileInput from "../../Components/UI/FileInput/FileInput";
 import {GoogleLogin} from "@react-oauth/google";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const Register = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector(selectRegisterError);
   const navigate = useNavigate();
   const loading = useAppSelector(selectRegisterLoading);
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   const [state, setState] = useState<RegisterMutation>({
     email: '',
@@ -62,6 +75,7 @@ const Register = () => {
 
   const phoneNumberPattern = '^+996\\d{9}$';
 
+  // @ts-ignore
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -159,13 +173,27 @@ const Register = () => {
                 variant="outlined"
                 name="password"
                 label="Пароль"
-                type="password"
                 autoComplete="new-password"
                 value={state.password}
                 onChange={inputChangeHandler}
                 error={Boolean(getFieldError('password'))}
                 helperText={getFieldError('password')}
                 sx={{ width: '100%' }}
+                type={showPassword ? 'text' : 'password'}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                inputProps={{ minLength: 8 }}
               />
             </Grid>
 

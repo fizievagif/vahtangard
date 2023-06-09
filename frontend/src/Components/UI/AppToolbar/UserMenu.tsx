@@ -1,66 +1,35 @@
-import React, {useState} from 'react';
-import {User} from '../../../types';
-import {Avatar, Button, IconButton, Menu, MenuItem} from '@mui/material';
-import {useAppDispatch, useAppSelector} from "../../../app/hooks";
-import LoadingButton from '@mui/lab/LoadingButton';
-import {selectLogoutLoading} from "../../../features/users/usersSlice";
-import {logout} from "../../../features/users/usersThunks";
+import React from 'react';
+import { Avatar, Button } from '@mui/material';
+import {apiURL} from "../../../constants";
+import {Link} from "react-router-dom";
+import {User} from "../../../types";
 
 interface Props {
   user: User;
 }
 
-const UserMenu: React.FC<Props> = ({user}) => {
-  const dispatch = useAppDispatch();
-  const loading = useAppSelector(selectLogoutLoading);
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const avatar = 'http://localhost:8000/';
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+const UserMenu: React.FC<Props> = ({ user }) => {
+  let cardImage = '';
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
+  if (user.avatar) {
+    cardImage = apiURL + '/' + user.avatar;
+  }
 
   return (
     <>
       <Button
-        onClick={handleClick}
         color="inherit"
+        className="conveythis-no-translate"
+        component={Link}
+        to={
+          user.role === 'user'
+            ? '/profile'
+            : '/admin/apartments'
+        }
       >
-        {user.firstName} {user.lastName}
+        {user.firstName}
+        <Avatar src={cardImage} alt={user.firstName} sx={{ ml: 1 }} />
       </Button>
-
-      <IconButton sx={{p: 0}}>
-
-      <Avatar alt={user.lastName} src={avatar + user.avatar}/>
-      </IconButton>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-
-        {loading ?
-          <LoadingButton
-            size="small"
-            color="secondary"
-            onClick={handleClick}
-            loading={loading}
-            loadingPosition="start"
-            variant="contained"
-          >
-            <span>Logout</span>
-          </LoadingButton>
-          :
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>}
-      </Menu>
     </>
   );
 };

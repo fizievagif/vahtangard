@@ -74,3 +74,14 @@ export interface PageLimit {
   page?: number;
   limit?: number;
 }
+
+export type UpdateUserMutation = Pick<
+  RegisterMutation,
+  'email' | 'phoneNumber' | 'lastName' | 'firstName' | 'avatar'
+>;
+
+export interface IChangePassword {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
