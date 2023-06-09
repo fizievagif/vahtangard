@@ -11,12 +11,13 @@ import Footer from "./Components/UI/Footer/Footer";
 import Profile from "./features/profile/Profile";
 import EditUser from "./features/profile/EditUser";
 import ChangePassword from "./features/profile/ChangePassword";
+import Categories from "./features/categories/Categories";
 
 function App() {
   const user = useAppSelector(selectUser);
 
   return (
-    <>
+    <div className="app-wrapper">
       <header>
         <AppToolbar/>
       </header>
@@ -43,14 +44,15 @@ function App() {
               </ProtectedRoute>
             }/>
             <Route path="/change-password" element={<ChangePassword/>} />
+            <Route path="/categories" element={<Categories/>} />
           </Routes>
         </Container>
       </main>
 
-      <footer>
+      <footer style={{ marginTop: "auto" }}>
         <Footer/>
       </footer>
-    </>
+    </div>
   );
 }
 

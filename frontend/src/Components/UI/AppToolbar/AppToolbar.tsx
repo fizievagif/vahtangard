@@ -68,11 +68,9 @@ const AppToolbar: React.FC<Props> = (props) => {
         <ListItem>{user ? null : <AnonymousMenu />}</ListItem>
         <Divider />
         <ListItem sx={{ textAlign: 'center' }}>
-          {user?.role === 'admin' ? (
-            <Button component={Link} to="/categories" color="inherit">
-              Категории объектов
-            </Button>
-          ) : null}
+          <Button component={Link} to="/categories" color="inherit">
+            Категории объектов
+          </Button>
         </ListItem>
         {user && user.role === 'admin' ? (
           <ListItem>
