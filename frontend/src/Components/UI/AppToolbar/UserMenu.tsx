@@ -24,7 +24,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         to={
           user.role === 'user'
             ? '/profile'
-            : '/admin/apartments'
+            : '/admin/categories'
         }
       >
         {user.firstName}

@@ -26,8 +26,10 @@ import useDebounce from "../../../../hooks/useDebounce";
 import SearchBar from "../../../../Components/UI/SearchBar/SearchBar";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks";
 import {categoryToggleDeleted, fetchCategories, removeCategory} from "../../categoriesThunks";
+import {useNavigate} from "react-router-dom";
 
 const CategoryAdmin = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const currentPage = useAppSelector(selectCategoriesPage);
@@ -65,6 +67,10 @@ const CategoryAdmin = () => {
     debouncedSearch({ [name]: value });
   };
 
+  const openEditCategory = (id: string) => {
+    void navigate(`/admin/categories/edit-category/${id}`);
+  };
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -85,7 +91,7 @@ const CategoryAdmin = () => {
                 <TableCell>{category.title}</TableCell>
                 <TableCell>
                   <IconButton
-                    onClick={() => console.log('Edited!')}
+                    onClick={() => openEditCategory(category._id)}
                     disabled={deleting === category._id || togglingDeleted}
                   >
                     <EditIcon />

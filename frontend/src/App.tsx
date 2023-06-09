@@ -12,17 +12,22 @@ import Profile from "./features/profile/Profile";
 import EditUser from "./features/profile/EditUser";
 import ChangePassword from "./features/profile/ChangePassword";
 import Categories from "./features/categories/Categories";
+import Contacts from "./Components/StaticComponents/Contacts/Contacts";
+import AboutUs from "./Components/StaticComponents/AboutUs/AboutUs";
+import CategoriesAdmin from "./features/admin/categories";
+import EditCategory from "./features/admin/categories/edit-category/EditCategory";
+import NewCategory from "./features/admin/categories/new-category";
 
 function App() {
   const user = useAppSelector(selectUser);
 
   return (
     <div className="app-wrapper">
-      <header>
+      <header style={{marginBottom: '40px'}}>
         <AppToolbar/>
       </header>
 
-      <main>
+      <main style={{marginTop: '40px'}}>
         <Container maxWidth="xl">
           <Routes>
             <Route path="/" element={<h1>Vaga</h1>} />
@@ -45,11 +50,22 @@ function App() {
             }/>
             <Route path="/change-password" element={<ChangePassword/>} />
             <Route path="/categories" element={<Categories/>} />
+            <Route path='/contacts' element={<Contacts/>}/>
+            <Route path='/about' element={<AboutUs/>}/>
+            <Route path="/admin/categories" element={
+              <CategoriesAdmin/>
+            }/>
+            <Route path="/admin/categories/edit-category/:id" element={
+              <EditCategory/>
+            }/>
+            <Route path="/admin/categories/categories/new-category" element={
+              <NewCategory/>
+            }/>
           </Routes>
         </Container>
       </main>
 
-      <footer style={{ marginTop: "auto" }}>
+      <footer>
         <Footer/>
       </footer>
     </div>

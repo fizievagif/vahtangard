@@ -74,7 +74,7 @@ const AppToolbar: React.FC<Props> = (props) => {
         </ListItem>
         {user && user.role === 'admin' ? (
           <ListItem>
-            <Button component={Link} to="/admin/courses" color="inherit">
+            <Button component={Link} to="/admin/categories" color="inherit">
               Админ панель
             </Button>
           </ListItem>
