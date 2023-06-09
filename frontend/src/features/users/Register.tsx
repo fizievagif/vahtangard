@@ -171,10 +171,11 @@ const Register = () => {
 
             <Grid item xs={12}>
               <FileInput
-                label="Avatar"
+                label="Выберите картинку профиля"
                 onChange={fileInputChangeHandler}
-                name="image"
+                name="avatar"
                 type="image/*"
+                errorCheck={getFieldError}
               />
             </Grid>
           </Grid>

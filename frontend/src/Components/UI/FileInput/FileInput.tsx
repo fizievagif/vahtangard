@@ -6,6 +6,7 @@ interface Props {
   name: string;
   label: string;
   type?: string;
+  errorCheck: (fieldName: string) => string | undefined;
 }
 
 const FileInput: React.FC<Props> = ({onChange, name, label, type}) => {

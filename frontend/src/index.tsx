@@ -10,6 +10,7 @@ import theme from "./theme";
 import {persistor, store} from "./app/store";
 import {addInterceptors} from "./axiosApi";
 import {GOOGLE_CLIENT_ID} from "./constants";
+import './stylesGlobal.css';
 
 addInterceptors(store);
 

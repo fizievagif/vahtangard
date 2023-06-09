@@ -37,10 +37,40 @@ export interface ValidationError {
 }
 
 export interface LoginMutation {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface GlobalError {
   error: string;
+}
+
+export interface ApiCategory {
+  _id: string;
+  title: string;
+  description: string;
+  image: string;
+  isDeleted: boolean;
+}
+
+export interface ApiResponse<Type> {
+  message: 'string';
+  result: Type | IPagination<Type>;
+}
+
+export interface IPagination<Type> {
+  [key: string]: Type[];
+  currentPage: number;
+  totalCount: number;
+}
+
+export interface ICategory {
+  title: string;
+  description: string;
+  image: File | null;
+}
+
+export interface PageLimit {
+  page?: number;
+  limit?: number;
 }
