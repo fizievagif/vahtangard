@@ -52,7 +52,14 @@ apartmentsRouter.get('/', async (req, res, next) => {
     const totalCount = await Apartment.count(searchParam);
     const skip = (p - 1) * l;
 
-    const apartments = await Apartment.find(searchParam, 'title image')
+    const apartments = await Apartment.find(searchParam, '' +
+      'title ' +
+      'image ' +
+      'cost ' +
+      'numberOfApartments ' +
+      'readiness ' +
+      'apartmentArea ' +
+      'description')
       .skip(skip)
       .limit(l);
 
@@ -96,7 +103,7 @@ apartmentsRouter.post(
         category: req.body.category,
         numberOfApartments: parseFloat(req.body.numberOfApartments),
         readiness: req.body.readiness,
-        apartmentArea: parseFloat(req.body.targetAudience),
+        apartmentArea: parseFloat(req.body.apartmentArea),
         image: req.file ? req.file.filename : null,
       });
       return res.send(apartment);
@@ -132,7 +139,7 @@ apartmentsRouter.put(
       course.title = req.body.title;
       course.description = req.body.description;
       course.numberOfApartments = parseFloat(req.body.numberOfApartments);
-      course.apartmentArea = parseFloat(req.body.apartments);
+      course.apartmentArea = parseFloat(req.body.apartmentArea);
       course.readiness = req.body.readiness;
       course.cost = parseFloat(req.body.cost);
 

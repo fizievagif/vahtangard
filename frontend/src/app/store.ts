@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import {usersReducer} from "../features/users/usersSlice";
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
 import {categoriesReducer} from "../features/categories/categoriesSlice";
+import {apartmentsReducer} from "../features/apartments/apartmentsSlice";
 
 const usersPersistConfig = {
   key: 'pinterestApi:users',
@@ -14,6 +15,7 @@ const usersPersistConfig = {
 const rootReducer = combineReducers({
   users: persistReducer(usersPersistConfig, usersReducer),
   categories: categoriesReducer,
+  apartments: apartmentsReducer,
 });
 
 export const store = configureStore({

@@ -85,3 +85,45 @@ export interface IChangePassword {
   newPassword: string;
   confirmPassword: string;
 }
+
+export interface IApartment {
+  title: string;
+  cost: string;
+  description: string;
+  category: string;
+  numberOfApartments: string;
+  apartmentArea: string;
+  readiness: string;
+
+  image: File | null;
+}
+
+export interface ApiApartment {
+  _id: string;
+  title: string;
+  image: string;
+  cost: number;
+  description: string;
+  numberOfApartments: number;
+  category: Pick<ApiCategory, '_id' | 'title'>;
+  readiness: string;
+  apartmentArea: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ApartmentShort = Pick<
+  ApiApartment,
+  '_id' | 'title' | 'numberOfApartments' | 'image' | 'isDeleted' | 'cost'
+>;
+
+export interface ApartmentsCost {
+  $gte?: number;
+  $lte?: number;
+}
+
+export type SearchApartment = Partial<
+  Omit<ICourse, 'numberOfApartment' | 'cost' | 'image'> & {
+  cost: ApartmentsCost;
+}>;

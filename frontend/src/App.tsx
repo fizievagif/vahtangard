@@ -17,6 +17,12 @@ import AboutUs from "./Components/StaticComponents/AboutUs/AboutUs";
 import CategoriesAdmin from "./features/admin/categories";
 import EditCategory from "./features/admin/categories/edit-category/EditCategory";
 import NewCategory from "./features/admin/categories/new-category";
+import Apartments from "./features/apartments/Apartments";
+import OneApartament from "./features/apartments/OneApartament";
+import EditApartment from "./features/admin/apartments/edit/EditApartment";
+import NewApartment from "./features/admin/apartments/NewApartment";
+import ApartmentsAdmin from "./features/admin/apartments";
+import CourseId from "./features/admin/apartments/[courseId]";
 
 function App() {
   const user = useAppSelector(selectUser);
@@ -30,7 +36,7 @@ function App() {
       <main style={{marginTop: '40px'}}>
         <Container maxWidth="xl">
           <Routes>
-            <Route path="/" element={<h1>Vaga</h1>} />
+            <Route path="/" element={<Apartments/>} />
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/admin/categories/edit" element={
@@ -60,6 +66,24 @@ function App() {
             }/>
             <Route path="/admin/categories/categories/new-category" element={
               <NewCategory/>
+            }/>
+            <Route path="/apartments" element={
+              <Apartments/>
+            }/>
+            <Route path="/apartments/:id" element={
+              <OneApartament/>
+            }/>
+            <Route path="/admin/apartments" element={
+              <ApartmentsAdmin/>
+            }/>
+            <Route path="/admin/apartments/apartments/edit/:id" element={
+              <EditApartment/>
+            }/>
+            <Route path="/admin/apartments/apartments/new-apartment" element={
+              <NewApartment/>
+            }/>
+            <Route path="/admin/apartments/apartments/:id" element={
+              <CourseId/>
             }/>
           </Routes>
         </Container>

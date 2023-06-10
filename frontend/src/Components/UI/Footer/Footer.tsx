@@ -21,7 +21,7 @@ export const Footer: FC = (): ReactElement => {
   };
 
   return (
-    <footer className="footer">
+    <footer>
       <Box
         sx={{
           width: '100%',
